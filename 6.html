@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>HOMETIFY</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            height: 80px;
+            background-color: transparent;
+            color: black;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-right: 124px;
+        }
+
+        .info,
+        .community {
+            font-size: 18px;
+            font-weight: bold;
+            padding: 10px;
+            display: inline-block;
+            margin-right: 124px;
+        }
+
+        .content {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        .login {
+            font-size: 18px;
+            font-weight: bold;
+            white-space: nowrap;
+            margin-left: auto;
+        }
+
+        .popular {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+                'Open Sans', 'Helvetica Neue', sans-serif;
+            font-size: 25px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+            color: #000000;
+            margin-top: 50px;
+            margin-left: 50px;
+            padding: 0 20px;
+        }
+
+        .rectangle {
+            width: 460px;
+            height: 216px;
+            background-color: #E5E5E5;
+            margin-top: 20px;
+            border-radius: 20px;
+            margin-left: 50px;
+            display: inline-block;
+        }
+
+        .rectangle-container {
+            display: flex;
+        }
+
+        .subtitle {
+            margin-left: 70px;
+            color: #58B973;
+        }
+
+        .green-area {
+            width: 100%;
+            height: 657px;
+            background-color: #58B973;
+            margin-top: -50px;
+            margin-left: 0px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .green-text {
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            margin-left: -500px;
+            margin-top: -100px;
+            position: absolute;
+        }
+
+        .additional-text {
+            color: #000000;
+            font-size: 80px;
+            font-weight: suit;
+            margin-left: -380px;
+            margin-top: 80px;
+            position: absolute;
+        }
+
+        .third-rectangle {
+            width: 460px;
+            height: 216px;
+            background-color: #E5E5E5;
+            margin-top: 20px;
+            border-radius: 20px;
+            margin-left: 50px;
+            display: inline-block;
+        }
+
+        .slider-container {
+            overflow: hidden;
+            width: 100%;
+            position: relative;
+        }
+
+        .slider-content {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slider-item {
+            flex: 0 0 460px;
+            height: 216px;
+            background-color: #E5E5E5;
+            margin: 20px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .slider-button {
+            font-size: 24px;
+            margin: 10px;
+            cursor: pointer;
+        }
+
+        /* 수정된 부분 시작 */
+        .additional-rectangle-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .additional-rectangle {
+            width: 100%;
+            height: 400px; /* 높이를 변경하지 않고 */
+            background-color: #E5E5E5;
+            border-radius: 20px;
+            margin: 0 20px;
+            display: flex;
+            overflow-x: auto;
+            z-index: 2;
+        }
+
+        .additional-rectangle-item {
+            flex: 1;
+            height: 100%;
+            background-color: #CCCCCC;
+            border-radius: 20px;
+            margin: 0 10px;
+            min-width: 400px;
+            z-index: 2;
+        }
+        
+        .additional-text3 {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+                'Open Sans', 'Helvetica Neue', sans-serif;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+            color: #000000;
+            margin-left: 45px;
+                }
+
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="title">HOMETIFY</div>
+        <div>
+            <div class="info">분양 정보</div>
+            <div class="community">커뮤니티</div>
+        </div>
+        <div class="login">로그인 해주세요!</div>
+    </div>
+    <div class="content">
+        <!-- 분양 정보 내용을 여기에 추가 -->
+        <!-- 커뮤니티 내용을 여기에 추가 -->
+    </div>
+    <div class="green-area">
+        <p class="green-text">용인시의 모든것</p>
+        <p class="additional-text">HOMETIFY</p>
+    </div>
+    <div class="popular">현시점 인기 지역</div>
+    <p class="subtitle">실시간 가장 핫한 지역이에요</p>
+    <div class="rectangle-container">
+        <div class="slider-container">
+            <div class="slider-content">
+                <div class="slider-item"></div>
+                <div class="slider-item"></div>
+                <div class="slider-item"></div>
+            </div>
+            <div class="button-container">
+                <div class="slider-button" onclick="moveSlider(-1, this)"> &lt; </div>
+                <div class="slider-button" onclick="moveSlider(1, this)"> &gt; </div>
+            </div>
+        </div>
+    </div>
+    <div class="popular">현시점 인기 지역</div>
+    <p class="subtitle">실시간 가장 핫한 분양지에요</p>
+    <div class="slider-container">
+        <div class="slider-content">
+            <div class="slider-item"></div>
+            <div class="slider-item"></div>
+            <div class="slider-item"></div>
+        </div>
+        <div class="button-container">
+            <div class="slider-button" onclick="moveSlider(-1, this)"> &lt; </div>
+            <div class="slider-button" onclick="moveSlider(1, this)"> &gt; </div>
+        </div>
+        <div class="additional-text3">커뮤니티에서 인기 있는 글이에요</div>
+        <div class="additional-rectangle-container">
+            <div class="additional-rectangle">
+                <div class="additional-rectangle-item"></div>
+                <div class="additional-rectangle-item"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function moveSlider(direction, btn) {
+            const sliderContainer = btn.closest(".slider-container");
+            const sliderContent = sliderContainer.querySelector(".slider-content");
+            const sliderItems = sliderContainer.querySelectorAll(".slider-item");
+
+            let currentIndex = parseInt(sliderContainer.getAttribute('data-index') || '0');
+
+            currentIndex += direction;
+
+            if (currentIndex < 0) {
+                currentIndex = sliderItems.length - 1;
+            } else if (currentIndex >= sliderItems.length) {
+                currentIndex = 0;
+            }
+
+            sliderContainer.setAttribute('data-index', currentIndex);
+            const translateValue = -currentIndex * (sliderItems[0].offsetWidth + 40);
+            sliderContent.style.transform = `translateX(${translateValue}px)`;
+        }
+    </script>
+</body>
+
+</html>
