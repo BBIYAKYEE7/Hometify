@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f3f3;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            max-width: 90%;
+        }
+        .container h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+        }
+        .form-group .button-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .form-group .button-group button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            color: white;
+            transition: background-color 0.3s;
+            background-color: #58B973;
+        }
+        .form-group .button-group .login-button {
+            background-color: #F49F42; 
+            border-radius: 5px;
+            padding: 12px 24px; 
+            font-size: 16px; 
+            margin-top: 20px; 
+            border: none; 
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%; 
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        .form-group .button-group .login-button:hover {
+            background-color: #E48B29; 
+        }
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .duplicate-check {
+            position: absolute;
+            right: 0;
+            top: 0;
+            font-size: 14px;
+            color: #888;
+            cursor: pointer;
+            margin-top: -10px;
+            margin-right: -18px;
+        }
+        .login-button {
+            position: absolute;
+            margin-left: -198px;
+            padding: 12px 24px;
+            margin-top: -12px;
+            border-radius: 20px;
+            color: #fff;
+            background-color: #58B973;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            text-align: center;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <h1>HOMETIFY</h1>
+        </div>
+        <h4 style="text-align: left; margin-bottom: 20px; color: #58B973">HOMETIFY에 오신 것을 환영합니다</h4>
+        <form action="file:///C:/Users/smart/OneDrive/%EB%B0%94%ED%83%95%20%ED%99%94%EB%A9%B4/%EB%8F%99%EC%95%84%EB%A6%AC%2C%20%EA%B2%BD%EA%B8%B0%EC%B0%BD%EA%B3%A0%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/login.html" method="POST" onsubmit="return validateForm()">
+            <div class="form-group">
+                <label for="username">아이디:</label>
+                <input type="text" id="username" name="username" required>
+                <div class="button-group">
+                    <button type="button" class="duplicate-check">중복 확인하기</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email">이메일:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">비밀번호:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">비밀번호 확인:</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+                <span class="error-message" id="password_error"></span>
+            </div>
+            <div class="form-group">
+                <label for="interest">관심 지역:</label>
+                <select id="interest" name="interest">
+                    <option value="Yongin City">수지구</option>
+                    <option value="Yongin City">기흥구</option>
+                    <option value="Yongin City">처인구</option>
+                </select>
+            </div>
+           
+            <div class="form-group" style="text-align: center;">
+                <button type="submit" class="login-button">회원가입하기</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function validateForm() {
+            var password = document.getElementById("password").value;
+            var confirm_password = document.getElementById("confirm_password").value;
+            var password_error = document.getElementById("password_error");
+            
+            if (password !== confirm_password) {
+                password_error.textContent = "비밀번호가 일치하지 않습니다.";
+                return false;
+            } else {
+                password_error.textContent = "";
+                return true;
+            }
+        }
+    </script>
+</body>
+</html>

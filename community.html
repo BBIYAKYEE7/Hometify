@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HOMETIFY COMMUNITY</title>
+<style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .header {
+    height: 80px;
+    background-color: transparent;
+    color: black;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+  }
+
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-right: 124px;
+  }
+
+  .info,
+  .community {
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px;
+    display: inline-block;
+    margin-right: 124px;
+  }
+
+  .info a,
+  .community a {
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+  }
+
+  .login {
+    font-size: 18px;
+    font-weight: bold;
+    white-space: nowrap;
+    margin-left: auto;
+  }
+  
+  main {
+    flex: 1;
+    padding: 2rem;
+  }
+  
+  .tweet {
+    border: 1px solid #ccc;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: white;
+    border-radius: 5px;
+  }
+  
+  footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .post-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1DA1F2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    width: 80px;
+    height: 40px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 1rem;
+  }
+
+  .add-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1DA1F2;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    font-size: 20px;
+    cursor: pointer;
+    margin-top: 1rem;
+  }
+
+  .file-input {
+    display: inline-block;
+    position: absolute;
+    margin-left: 100px;
+    margin-top: -2rem;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="title">HOMETIFY</div>
+      <div>
+        <div class="info"><a href="#">분양 정보</a></div>
+        <div class="community"><a href="#">커뮤니티</a></div>
+      </div>
+      <div class="login">로그인 해주세요!</div>
+    </div>
+    <main>
+      <div class="tweet">
+        <h3>사용자 이름</h3>
+        <div class="tweet-content">
+          <p id="tweetContent1" contenteditable="true" placeholder="글을 입력하세요..."></p>
+          <button class="post-button" id="postButton1" onclick="postTweet('tweetContent1', 'fileInput1')">올리기</button>
+          <input type="file" id="fileInput1" class="file-input">
+        </div>
+      </div>
+      <div class="tweet">
+        <h3>사용자 이름</h3>
+        <div class="tweet-content">
+          <p id="tweetContent2" contenteditable="true" placeholder="글을 입력하세요..."></p>
+          <button class="post-button" id="postButton2" onclick="postTweet('tweetContent2', 'fileInput2')">올리기</button>
+          <input type="file" id="fileInput2" class="file-input">
+        </div>
+      </div>
+      <button class="add-button" onclick="addTweetBox()">+</button>
+    </main>
+    <footer>
+      <p>&copy; 2023 HOMETIFY COMMUNITY. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script>
+    // 글과 사진을 올리는 함수
+    function postTweet(tweetId, fileInputId) {
+      const tweetContent = document.getElementById(tweetId).textContent;
+      const fileInput = document.getElementById(fileInputId);
+      if (tweetContent.trim() !== "" || fileInput.files.length > 0) {
+        const tweetElement = document.createElement("div");
+        tweetElement.className = "tweet-content";
+
+        if (tweetContent.trim() !== "") {
+          const textElement = document.createElement("p");
+          textElement.textContent = tweetContent;
+          tweetElement.appendChild(textElement);
+        }
+
+        if (fileInput.files.length > 0) {
+          const file = fileInput.files[0];
+          const fileElement = document.createElement("img");
+          fileElement.src = URL.createObjectURL(file);
+          fileElement.className = "tweet-image";
+          tweetElement.appendChild(fileElement);
+          fileInput.classList.add("hidden");
+          document.getElementById(fileInputId).previousElementSibling.classList.add("disabled");
+        }
+
+        document.getElementById(tweetId).textContent = "";
+        fileInput.value = "";
+        document.getElementById(tweetId).parentNode.appendChild(tweetElement);
+      }
+    }
+
+    // 트윗 박스 추가 함수
+    function addTweetBox() {
+      const main = document.querySelector("main");
+      const newTweetDiv = document.createElement("div");
+      newTweetDiv.className = "tweet";
+      const newTweetIndex = main.childElementCount;
+      newTweetDiv.innerHTML = `
+        <h3>사용자 이름</h3>
+        <div class="tweet-content">
+          <p id="tweetContent${newTweetIndex}" contenteditable="true" placeholder="글을 입력하세요..."></p>
+          <button class="post-button" id="postButton${newTweetIndex}" onclick="postTweet('tweetContent${newTweetIndex}', 'fileInput${newTweetIndex}')">올리기</button>
+          <input type="file" id="fileInput${newTweetIndex}" class="file-input">
+        </div>
+      `;
+      main.insertBefore(newTweetDiv, document.querySelector(".add-button"));
+    }
+  </script>
+</body>
+</html>

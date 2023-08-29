@@ -25,8 +25,8 @@ body {
     width: 20px;
     height: 20px;
     object-fit: cover;
-    display: inline-flex; /* 수정된 부분: inline-block 대신 inline-flex 사용 */
-    align-items: center; /* 수정된 부분: 수직 정렬 */
+    display: inline-flex; 
+    align-items: center; 
     flex-shrink: 0;
     margin-right: 15px;
 }
@@ -43,14 +43,14 @@ body {
 .title {
     font-size: 24px;
     font-weight: bold;
-    margin-right: 124px; /* 수정 가능: 타이틀 오른쪽 공백 조정 */
+    margin-right: 124px; 
 }
 .info, .community {
     font-size: 18px;
     font-weight: bold;
     padding: 10px;
-    display: inline-flex; /* 수정된 부분: inline-block 대신 inline-flex 사용 */
-    align-items: center; /* 수정된 부분: 수직 정렬 */
+    display: inline-flex; 
+    align-items: center; 
     margin-right: 20px;
     white-space: nowrap;
 }
@@ -63,8 +63,8 @@ body {
 .login {
     font-size: 18px;
     font-weight: bold;
-    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
-    margin-left: auto; /* "로그인 해주세요!"를 오른쪽으로 이동 */
+    white-space: nowrap; 
+    margin-left: auto; 
 }
 .popular {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -72,10 +72,10 @@ body {
     font-style: normal;
     font-weight: 700;
     line-height: normal;
-    color: #000000; /* 텍스트 색상 지정 */
-    margin-top: 84px; /* 현시점 인기 지역 텍스트의 위쪽 여백 조정 */
+    color: #000000;
+    margin-top: 84px; 
     margin-left: 50px;
-    padding: 0 20px; /* 현시점 인기 지역 텍스트 내부 여백 조정 */   
+    padding: 0 20px; 
 }
 .popular2 {
     margin-top: 5px;
@@ -92,15 +92,15 @@ body {
 .rectangle {
     width: 460px;
     height: 216px;
-    background-color: #E5E5E5; /* 도형의 배경 색상 지정 */
-    margin-top: 20px; /* 도형과 텍스트 사이의 여백 조정 */
-    border-radius: 20px; /* 도형의 모서리를 둥글게 만드는 속성 */
-    margin-left: 50px; /* 도형의 왼쪽 여백을 현시점 인기 지역 텍스트와 맞춤 */
-    display: inline-block; /* 도형을 텍스트 옆으로 배치 */
+    background-color: #E5E5E5; 
+    margin-top: 20px; 
+    border-radius: 20px; 
+    margin-left: 50px; 
+    display: inline-block;
 }
 .rectangle-container {
     display: flex;
-    margin-top: 84px; /* 텍스트와 도형 사이의 여백 조정 */
+    margin-top: 84px;
     margin-left: 50px;
 }
 .popular-container {
@@ -112,21 +112,21 @@ body {
     font-size: 18px;
     font-weight: bold;
     padding: 10px 20px;
-    background-color: #ffffff; /* 버튼 배경 색상 */
-    color: rgb(0, 0, 0); /* 버튼 텍스트 색상 */
-    border: none; /* 테두리 없애기 */
-    border-radius: 5px; /* 버튼 모서리 둥글게 */
+    background-color: #ffffff; 
+    color: rgb(0, 0, 0);
+    border: none; 
+    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s, color 0.3s; /* 호버 효과를 위한 트랜지션 */
+    transition: background-color 0.3s, color 0.3s; 
 }
 
 .button:hover {
-    background-color: #494949; /* 호버 효과 시 배경 색상 변경 */
+    background-color: #494949;
 }
 
 .button img {
-    width: 24px; /* 이미지 너비 조절 */
-    height: 24px; /* 이미지 높이 조절 */
+    width: 24px; 
+    height: 24px; 
     align-items: center;
 }
 
@@ -134,8 +134,8 @@ body {
     display: flex;
     width: 100%;
     height: 100vh;
-    justify-content: center; /* 가로 중앙 정렬 */
-    align-items: flex-start; /* 상단 정렬 */
+    justify-content: center; 
+    align-items: flex-start; 
 }
 
 .split-item {
@@ -150,5 +150,5 @@ body {
 
 .split-item h1, .split-item p {
     margin: 0;
-    text-align: center; /* 가운데 정렬 */
+    text-align: center; 
 }
