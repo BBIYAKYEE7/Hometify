@@ -120,9 +120,6 @@ body {
     transition: background-color 0.3s, color 0.3s; 
 }
 
-.button:hover {
-    background-color: #494949;
-}
 
 .button img {
     width: 24px; 
