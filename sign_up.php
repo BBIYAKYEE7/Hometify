@@ -1,3 +1,6 @@
+<?php  
+    include ("../html/db.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -117,42 +120,48 @@
             <h1>HOMETIFY</h1>
         </div>
         <h4 style="text-align: left; margin-bottom: 20px; color: #58B973">HOMETIFY에 오신 것을 환영합니다</h4>
-        <form action="file:///C:/Users/smart/OneDrive/%EB%B0%94%ED%83%95%20%ED%99%94%EB%A9%B4/%EB%8F%99%EC%95%84%EB%A6%AC%2C%20%EA%B2%BD%EA%B8%B0%EC%B0%BD%EA%B3%A0%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/login.html" method="POST" onsubmit="return validateForm()">
+        <form action="https://hometify.kr/chek_in.php" method="POST">
             <div class="form-group">
                 <label for="username">아이디:</label>
-                <input type="text" id="username" name="username" required>
-                <div class="button-group">
+                <input type="text" id="username" name="userid">
+                <!---<div class="button-group">
                     <button type="button" class="duplicate-check">중복 확인하기</button>
-                </div>
+                </div>--->
             </div>
             <div class="form-group">
                 <label for="email">이메일:</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" id="email" name="useremail">
             </div>
             <div class="form-group">
                 <label for="password">비밀번호:</label>
-                <input type="password" id="password" name="password" required>
+                <input type="password" id="password" name="userpw">
             </div>
-            <div class="form-group">
+            <!---<div class="form-group">
                 <label for="confirm_password">비밀번호 확인:</label>
                 <input type="password" id="confirm_password" name="confirm_password" required>
                 <span class="error-message" id="password_error"></span>
             </div>
+            --->
             <div class="form-group">
                 <label for="interest">관심 지역:</label>
-                <select id="interest" name="interest">
-                    <option value="Yongin City">수지구</option>
-                    <option value="Yongin City">기흥구</option>
-                    <option value="Yongin City">처인구</option>
+                <select id="interest" name="userinterest">
+                    <option value="suji">수지구</option>
+                    <option value="kihung">기흥구</option>
+                    <option value="chuin">처인구</option>
                 </select>
+            </div>
+
+            <div class= form-group>
+                <label for="age">생년월일:<label>
+                <input type="month" id="month" name="birthday">
             </div>
            
             <div class="form-group" style="text-align: center;">
-                <button type="submit" class="login-button">회원가입하기</button>
+                <button type="submit" class="login-button" onclick="location.href='login.php'">회원가입하기</button>
             </div>
         </form>
     </div>
-
+    <!---
     <script>
         function validateForm() {
             var password = document.getElementById("password").value;
@@ -167,6 +176,38 @@
                 return true;
             }
         }
+    </script>--->
+
+    <script>
+        var keydownCtrl = 0;
+        var keydownShift = 0;
+
+
+        document.onkeydown = keycheck;
+        document.onkeyup = uncheckCtrlShift;
+
+
+        function keycheck() {
+            switch (event.keyCode) {
+                case 123: event.keyCode = ''; return false; break; //F12
+                case 17: event.keyCode = ''; keydownCtrl = 1; return false; break; //컨트롤키
+            }
+
+
+            if (keydownCtrl) return false;
+        }
+
+
+        function uncheckCtrlShift() {
+            if (event.keyCode == 17) keydownCtrl = 0;
+            if (event.keyCode == 16) keydownShift = 0;
+        }
+
+
+        function click() {
+            if ((event.button == 2) || (event.button == 2)) { alert('[마우스 오른쪽 클릭] / [컨트롤] / [F12] 금지 입니다.'); }
+        }
+        document.onmousedown = click;
     </script>
 </body>
 </html>

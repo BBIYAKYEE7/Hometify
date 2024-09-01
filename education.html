@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>HOMETIFY - EDUCATION & JOB</title>
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript"
+        src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=efc24754b9098711d35fa0e986136a1e&libraries=services"></script>
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 500px;
+            border-radius: 20px;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .header {
+            height: 80px;
+            background-color: transparent;
+            color: black;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-right: 124px;
+        }
+
+        .info,
+        .community,
+        .education-job,
+        .search-container {
+            font-size: 18px;
+            font-weight: bold;
+            padding: 10px;
+            display: inline-block;
+            margin-right: 124px;
+        }
+
+        .info a,
+        .community a,
+        .login a,
+        .title a,
+        .education-job a {
+            text-decoration: none;
+            color: black;
+            cursor: pointer;
+        }
+
+        .content {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            align-items: flex-start;
+        }
+
+        .map-container {
+            width: 60%;
+            height: 510px;
+            border-radius: 10px;
+        }
+
+        .search-container {
+            width: 30%;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-right: 20px;
+            position: overflow;
+        }
+
+        .search-input {
+            width: auto;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .search-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #58B973;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            position: absolute;
+        }
+
+        .search-layer {
+            visibility: visible;
+        }
+
+        .search-button:hover {
+            background-color: #62B479;
+        }
+
+        .search-box dl {
+            padding: 10px 0;
+            border-top: 1px solid #ebebeb;
+        }
+
+        .search-box dd button.sell-button[aria-pressed='true'] {
+            color: #58B973;
+            border: 1px solid #58B973;
+        }
+
+        .search-box dd button.sell-button {
+            margin-left: 1px;
+            padding: 0 15px;
+            height: 30px;
+            line-height: 28px;
+            font-size: 13px;
+            font-weight: 300;
+            color: #818181;
+            letter-spacing: -.5px;
+            background: #fff;
+            border: 1px solid #dcdcdc;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .sell-button {
+            background-color: #58B973;
+            color: #fff;
+            border-radius: 40px;
+            font-size: 13px;
+            border: 1px solid #fff;
+            cursor: pointer;
+        }
+
+        .sell-button:hover {
+            background-color: #62B479;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        dt {
+            font-weight: bold;
+            text-align: left;
+            margin-left: 0;
+        }
+
+        .results-container {
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+
+        }
+
+        .result-item {
+            padding: 10px;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            cursor: pointer;
+        }
+
+        .result-item:hover {
+            background-color: #e0e0e0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="title"><a href="index.php">HOMETIFY</a></div>
+        <div class="info"><a href="home.html">지역 비교</a></div>
+        <div class="community"><a href="community.html">커뮤니티</a></div>
+        <div class="education-job"><a href="education.html">도시정보</a></div>
+    </div>
+    <div class="content">
+        <div class="map-container" id="map"></div>
+        <div class="search-container">
+            <dl>
+                <dt>용인시 모든 인프라 확인하기</dt>
+                <dd>
+                    <button type="button" id="school_step1" name="school_step1" class="sell-button" value="전체"
+                        aria-pressed="true" onclick="filterSchools('전체')">전체</button>
+                </dd>
+            </dl>
+            <dl>
+                <dt>학교</dt>
+                <dd>
+                    <button type="button" id="school_step2" name="school_step2" class="sell-button" value="유치원"
+                        aria-pressed="true" onclick="filterSchools('유치원')">유치원</button>
+                    <button type="button" id="school_step3" name="school_step3" class="sell-button" value="초등학교"
+                        aria-pressed="true" onclick="filterSchools('초등학교')">초등학교</button>
+                    <button type="button" id="school_step4" name="school_step4" class="sell-button" value="중학교"
+                        aria-pressed="true" onclick="filterSchools('중학교')">중학교</button>
+                    <button type="button" id="school_step5" name="school_step5" class="sell-button" value="고등학교"
+                        aria-pressed="true" onclick="filterSchools('고등학교')">고등학교</button>
+                    <button type="button" id="school_step6" name="school_step6" class="sell-button" value="대학교"
+                        aria-pressed="true" onclick="filterSchools('대학교')">대학교</button>
+                </dd>
+            </dl>
+            <dt>병원</dt>
+            <dd>
+                <button type="button" id="school_step7" name="school_step7" class="sell-button" value="병원"
+                    aria-pressed="true" onclick="filterSchools('병원')">병원</button>
+            </dd>
+            <dl>
+                <dt>교통 인프라</dt>
+                <dd>
+                    <button type="button" id="school_step8" name="school_step8" class="sell-button" value="지하철"
+                        aria-pressed="true" onclick="filterSchools('역')">지하철</button>
+                    <button type="button" id="school_step9" name="school_step9" class="sell-button" value="버스"
+                        aria-pressed="true" onclick="filterSchools('버스')">버스</button>
+                </dd>
+            </dl>
+            <dl>
+                <dt>구청</dt>
+                <dd>
+                    <button type="button" id="school_step10" name="school_step10" class="sell-button" value="구청"
+                        aria-pressed="true" onclick="filterSchools('구청')">구청</button>
+                </dd>
+            </dl>
+            <dl>
+                <dt>지역명 검색</dt>
+                <dd class="dd-layer">
+                    <span class="input-area">
+                        <input type="text" autocomplete="off" class="search-input" id="search_area_input" value="">
+                        <input type="button" class="search-button" value="검색" onclick="searchArea()">
+                    </span>
+                    <div class="search-layer" style="visibility: hidden;">
+
+                    </div>
+                </dd>
+            </dl>
+        </div>
+        <div id="results" class="results-container"></div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 Overnight Coders. All rights reserved.</p>
+    </footer>
+    <script>
+        var schools = [
+            { name: "수원초등학교", lat: 37.27846341, lng: 127.00998601 },
+            { name: "동수원초등학교", lat: 37.2692389, lng: 127.0398885 },
+            { name: "수원동신초등하교", lat: 37.2958458, lng: 126.9893649 },
+            { name: "수원중촌초등학교", lat: 37.2725423, lng: 126.9445366 },
+            { name: "수원신곡초등학교", lat: 37.257962, lng: 127.0133914 },
+            { name: "조원초등학교", lat: 37.3029088, lng: 127.0168051 },
+            { name: "수원선일초등학교", lat: 37.248269, lng: 127.0304178 },
+            { name: "인계초등학교", lat: 37.2729326, lng: 127.0262231 },
+            { name: "화성초등학교", lat: 37.2810423, lng: 127.000642 },
+            { name: "연무초등학교", lat: 37.287153, lng: 127.0222786 },
+            { name: "수원여자고등학교", lat: 37.2767216, lng: 127.0041886 },
+            { name: "수성고등학교", lat: 37.293651, lng: 127.0027655 },
+            { name: "수원고등학교", lat: 37.2670999, lng: 127.0181129 },
+            { name: "수원공업고등학교", lat: 37.2741036, lng: 127.0255739 },
+            { name: "수원중학교", lat: 37.267445, lng: 127.0188347 },
+            { name: "수원제일중학교", lat: 37.286986, lng: 127.000864 },
+            { name: "영복여자중학교", lat: 37.2856253, lng: 127.0027987 },
+            { name: "숙지중학교", lat: 37.2823358, lng: 126.9921109 },
+            { name: "매향중학교", lat: 37.2859864, lng: 127.0181679 },
+            { name: "명인중학교", lat: 37.2919169, lng: 126.9930894 },
+            { name: "수원복중학교", lat: 37.2950132, lng: 127.0210285 },
+            { name: "삼일중학교", lat: 37.2840546, lng: 127.0185553 },
+            { name: "중천중학교", lat: 37.2892343, lng: 126.9820501 },
+            { name: "아주대학교", lat: 37.2821937, lng: 127.0451322 },
+            { name: "아주대학교 병원", lat: 37.2791767, lng: 127.0464789 },
+            { name: "한국교통대학교 의왕캠퍼스", lat: 37.3150245, lng: 126.9536334 },
+            { name: "성균관대학교 자연과학캠퍼스", lat: 37.2937156, lng: 126.974337 },
+            { name: "합동신학대학원대학교", lat: 37.27868161, lng: 127.05605815 },
+            { name: "소화초등학교", lat: 37.27740752, lng: 127.05299302 },
+            { name: "산남중학교", lat: 37.27040027, lng: 127.05144624 },
+            { name: "중앙기독초등학교", lat: 37.27470383, lng: 127.05730843 },
+            { name: "경희대학교 국제캠퍼스", lat: 37.2429616, lng: 127.0800525 },            
+            { name: "삼성전자공과대학교", lat: 37.23072148, lng: 127.08693799 },
+            { name: "한림대학교 동탄성심병원", lat: 37.2165827, lng: 127.0798736 },
+            { name: "동남보건대학교", lat: 37.2986364, lng: 126.9866312 },
+            { name: "동남보건대학교부설유치원", lat: 37.2986364, lng: 126.9866312 },
+            { name: "천천고등학교", lat: 37.2986364, lng: 126.9866312 },
+            { name: "대평중학교", lat: 37.2986364, lng: 126.9866312 },
+            { name: "대평고등학교", lat: 37.29565704, lng: 126.98862026 },
+            { name: "수원동신초등학교", lat: 37.29565704, lng: 126.98862026 },
+            { name: "수원동신초등학교병설유치원", lat: 37.29565704, lng: 126.98862026 },
+            { name: "경기대학교", lat: 37.300485, lng: 127.035833 },
+            { name: "차세대융합기술연구원", lat: 37.29427398, lng: 127.04547841 },
+            { name: "서울대학교 융합과학기술대학원", lat: 37.2943843, lng: 127.04722694 },
+            { name: "용인대학교", lat: 37.226722, lng: 127.167843 },
+            { name: "명지대학교 자연캠퍼스", lat: 37.22340895, lng: 127.1859521 },
+            { name: "총신대학교 신학대학교 양지캠퍼스", lat: 37.24782188, lng: 127.29954159 },
+            { name: "강남대학교", lat: 37.27574, lng: 127.13249 },
+            { name: "연세대학교 용인세브란스병원", lat: 37.2709707, lng: 127.1482229 },
+            { name: "단국대학교 죽전캠퍼스", lat: 37.3215984, lng: 127.1267503 },
+            { name: "강남병원", lat: 37.2735367, lng: 127.1113393 },
+            { name: "서울예스병원", lat: 37.3300899, lng: 127.1093303 },                                // 용인시 지역만의 특화 데이터베이스 자체 구축
+            { name: "린병원", lat: 37.3005868, lng: 127.0662405 },
+            { name: "늘봄요양병원", lat: 37.3008812, lng: 127.0660257 },
+            { name: "이음병원(용인시)", lat: 37.2748945, lng: 127.0734226 },
+            { name: "더원요양병원", lat: 37.2876276, lng: 127.1086668 }, 
+            { name: "명주병원", lat: 37.2352964, lng: 127.2011459 },
+            { name: "다보스병원", lat: 37.2314675, lng: 127.2113666 },
+            { name: "용인서울병원", lat: 37.2403252, lng: 127.2145981 },
+            { name: "단국대학교 치과대학 죽전치과병원", lat: 37.3218381, lng: 127.12489 },
+            { name: "용인제일베디병원", lat: 37.2743124, lng: 127.2284047 },
+            { name: "경기도립노인전문용인병원", lat: 37.2503471, lng: 127.1556331 },
+            { name: "이음 병원(수원시)", lat: 37.2686829, lng: 127.0056699 },
+            { name: "강북삼성병원 수원종합건진센터", lat: 37.2710409, lng: 127.066482 },
+            { name: "성지고등학교", lat: 37.27380885, lng: 127.13227106 },
+            { name: "갈곡초등학교", lat: 37.27380885, lng: 127.13227106 }, //초등학교, 중학교, 고등학교, 대학교, 병원 -> 다음 칸부터는 교통으로 이어짐
+            { name: "성복역", lat: 37.313557, lng: 127.080341 },
+            { name: "전대.에버랜드역", lat: 37.285388, lng: 127.219532 },
+            { name: "상현역", lat: 37.297874, lng: 127.069356 },
+            { name: "죽전역", lat: 37.324583, lng: 127.107398 },
+            { name: "수지구청역", lat: 37.322622, lng: 127.094891 },
+            { name: "동천역", lat: 37.337795, lng: 127.102845 },
+            { name: "시청.용인대역", lat: 37.2394, lng: 127.178839 },
+            { name: "동백역", lat: 37.2691239, lng: 127.1527886 },
+            { name: "어정역", lat: 37.274954, lng: 127.143758 },
+            { name: "강남대역", lat: 37.270197, lng: 127.126007 },
+            { name: "고진역", lat: 37.244694, lng: 127.214222 },
+            { name: "기흥역<환승>", lat: 37.275664, lng: 127.115956 },
+            { name: "신갈역", lat: 37.286134, lng: 127.111323 },
+            { name: "보정역", lat: 37.312747, lng: 127.108232 },
+            { name: "운동장.송담대역", lat: 37.237896, lng: 127.209057 },
+            { name: "용인경량전철주식회사역", lat: 37.2429887, lng: 127.1614803 },
+            { name: "광교(경기대)역", lat: 37.3021303, lng: 127.0441582 },
+            { name: "오리역", lat: 37.339839, lng: 127.108998 },
+            { name: "용인정보고교역", lat: 37.2429887, lng: 127.1614803 },
+            { name: "수원TG역", lat: 37.2687678, lng: 127.1009659 },
+            { name: "구성역<환승>", lat: 37.299013, lng: 127.105664 },
+            { name: "광교중앙(아주대)역", lat: 37.288412, lng: 127.051658 },
+            { name: "둔적역", lat: 37.267201, lng: 127.213619 },
+            { name: "초당역", lat: 37.260358, lng: 127.1598275 },
+            { name: "지석역", lat: 37.26974, lng: 127.13666 },
+            { name: "정자역", lat: 37.366163, lng: 127.108088 },
+            { name: "신갈영덕시외버스정류장", lat: 37.2699571, lng: 127.096889 }, //--여기서부터 버스 정류장 
+            { name: "장재미 버스 정류장", lat: 37.204976, lng: 127.240292 },
+            { name: "용심 버스 정류장", lat: 37.110331, lng: 127.152473 },
+            { name: "용인공용버스터미널", lat: 37.232866, lng: 127.20964 },
+            { name: "양지 버스 정류장", lat: 37.233846, lng: 127.285882 },
+            { name: "사암4리 버스 정류장", lat: 37.188903, lng: 127.298695 },
+            { name: "용인터미널 버스 정류장", lat: 37.2340286, lng: 127.2088347 },
+            { name: "별학 버스 정류장", lat: 37.209409, lng: 127.234119 },
+            { name: "장촌 버스 정류장", lat: 37.161593, lng: 127.25346 },
+            { name: "상현운수 버스 정류장", lat: 37.3296525, lng: 127.1554887 },
+            { name: "용인시장.시장양국 버스 정류장", lat: 37.23542, lng: 127.206684 },
+            { name: "명지대사거리 버스 정류장", lat: 37.236339, lng: 127.188856 },
+            { name: "어은목마을 버스 정류장", lat: 37.270393, lng: 127.15551 },
+            { name: "양지우체국 버스 정류장", lat: 37.234052, lng: 127.2871385 },
+            { name: "용마초교 버스 정류장", lat: 37.237848, lng: 127.214052 },
+            { name: "용인터미널 버스 정류장", lat: 37.2329873, lng: 127.2100025 },
+            { name: "용인터미널.컬리넌호텔 버스 정류장", lat: 37.233665, lng: 127.2093036 },
+            { name: "용인포은아트홀 버스 정류장", lat: 37.324615, lng: 127.10474 },
+            { name: "원삼 버스 정류장", lat: 37.164784, lng: 127.310818 },
+            { name: "신갈고속시외 버스 정류소", lat: 37.271421, lng: 127.104355 },
+            { name: "용인정보고교 버스 정류장", lat: 37.242801, lng: 127.2164345 },
+            { name: "포보스병원 버스 정류장", lat: 37.235425, lng: 127.210932 },
+            { name: "오산리종점 버스 정류장", lat: 37.3299, lng: 127.150387 },
+            { name: "용인예술과학대학교 버스 정류장", lat: 37.22817, lng: 127.21529 },
+            { name: "동진마을 버스 정류장", lat: 37.226548, lng: 127.193434 },
+            { name: "추계2리 버스 정류장", lat: 37.249234, lng: 127.318258 },
+            { name: "이마트.상공희의소 버스 정류장", lat: 37.2313643, lng: 127.1880731 },
+            { name: "영문중학교 버스 정류장", lat: 37.271484, lng: 127.207794 },
+            { name: "라이프아파트 버스 정류장", lat: 37.232035, lng: 127.213932 },
+            { name: "옥현 버스 정류장", lat: 37.225643, lng: 127.21073 },
+            { name: "처인구청.용인헌혈의집 버스 정류장", lat: 37.234992, lng: 127.202834 },
+            { name: "용인미르스타디움 버스 정류장", lat: 37.247888, lng: 127.166357 },
+            { name: "삼박곡 버스 정류장", lat: 37.229528, lng: 127.238401 },
+            { name: "용인농렵경제사업장 버스 정류장", lat: 37.232845, lng: 127.233037 },
+            { name: "송문리 버스 정류장", lat: 37.225712, lng: 127.256221 },
+            { name: "계룡리슈빌 버스 정류장", lat: 37.284104, lng: 127.153857 },
+            { name: "문예회관입구 버스 정류장", lat: 37.232763, lng: 127.199758 },
+            { name: "처인구청후문 버스 정류장", lat: 37.233036, lng: 127.202685 },
+            { name: "우성아파트 버스 정류장", lat: 37.234244, lng: 127.215035 },
+            { name: "서울병원 버스 정류장", lat: 37.240064, lng: 127.214874 },
+            { name: "남동구미마을 버스 정류장", lat: 37.227239, lng: 127.209102 },
+            { name: "송문3리 버스 정류장", lat: 37.225559, lng: 127.253416 },
+            { name: "마평주공아파트 버스 정류장", lat: 37.235595, lng: 127.2135 },
+            { name: "노루실 버스 정류장", lat: 37.204734, lng: 127.208379 },
+            { name: "영통입구시외버스정류장", lat: 37.268409, lng: 127.0820765 },
+            { name: "현대아파트 버스 정류장", lat: 37.23127, lng: 127.209883 },
+            { name: "한국민속촌(공황버스) 정류장", lat: 37.25474, lng: 127.108677 },
+            { name: "우성아파트 버스 정류장", lat: 37.234434, lng: 127.21509 },
+            { name: "두보아파트 버스 정류장", lat: 37.235682, lng: 127.215821 },
+            { name: "보보스타운 버스 정류장", lat: 37.227061, lng: 127.204021 },
+            { name: "운동장.송담대역 버스 정류장", lat: 37.237333, lng: 127.208411 },
+            { name: "명지대역", lat: 37.238043, lng: 127.190298 },
+            { name: "김량자역", lat: 37.237293, lng: 127.198671 },
+            { name: "용인중학교", lat: 37.2385127, lng: 127.2014812 },
+            { name: "용인고등학교", lat: 37.2405439, lng: 127.1930324 },
+            { name: "고림중학교", lat: 37.2401882, lng: 127.2184169 },
+            { name: "고림고등학교", lat: 37.2405439, lng: 127.1930324 },
+            { name: "포곡고등학교", lat: 37.2726307, lng: 127.227648 },
+            { name: "포곡중학교", lat: 37.2799075, lng: 127.2218428 },
+            { name: "용동중학교", lat: 37.2313034, lng: 127.2824771 },
+            { name: "용인시청", lat: 37.2378868, lng: 127.194206 },
+            { name: "수지구청", lat: 37.32201585, lng: 127.09758201 },
+            { name: "기흥구청", lat: 37.2804055, lng: 127.1146587 },
+            { name: "처인구청", lat: 37.23444, lng: 127.201346 },
+            { name: "성지초등학교", lat: 37.2748512, lng: 127.1282759 },
+            { name: "성지중학교", lat: 37.2738351, lng: 127.1278343 },
+            { name: "용인한얼고등학교", lat: 37.2708676, lng: 127.1220718 },
+            { name: "용인둔전초등학교", lat: 37.2686589, lng: 127.2251205 },
+            { name: "영통구청", lat: 37.2596172, lng: 127.0464609 },
+
+        ];
+
+        var markers = [];
+        var map;
+
+        kakao.maps.load(function () {
+            var mapContainer = document.getElementById('map');
+            var suwonCenter = new kakao.maps.LatLng(37.263573, 127.028601);              
+
+            var options = {
+                center: suwonCenter,
+                level: 7
+            };
+
+            map = new kakao.maps.Map(mapContainer, options);
+            markers = [];
+
+            for (var i = 0; i < schools.length; i++) {
+                var school = schools[i];
+                var markerPosition = new kakao.maps.LatLng(school.lat, school.lng);
+
+                var marker = new kakao.maps.Marker({
+                    position: markerPosition,
+                    map: map,
+                    title: school.name
+                });
+
+                markers.push(marker);
+            }
+
+            function filterSchools(type) {
+                for (var i = 0; i < markers.length; i++) {
+                    markers[i].setMap(null);
+                }
+
+                for (var i = 0; i < schools.length; i++) {
+                    var school = schools[i];
+                    if (type === "전체" || school.name.includes(type)) {
+                        var markerPosition = new kakao.maps.LatLng(school.lat, school.lng);
+                        var marker = new kakao.maps.Marker({
+                            position: markerPosition,
+                            map: map,
+                            title: school.name
+                        });
+                        markers.push(marker);
+                    }
+                }
+            }
+
+
+            document.getElementById("school_step1").addEventListener("click", function () {
+                filterSchools('전체');
+            });
+
+            document.getElementById("school_step2").addEventListener("click", function () {
+                filterSchools('유치원');
+            });
+
+            document.getElementById("school_step3").addEventListener("click", function () {
+                filterSchools('초등학교');
+            });
+
+            document.getElementById("school_step4").addEventListener("click", function () {
+                filterSchools('중학교');
+            });
+
+            document.getElementById("school_step5").addEventListener("click", function () {
+                filterSchools('고등학교');
+            });
+
+            document.getElementById("school_step6").addEventListener("click", function () {
+                filterSchools('대학교');
+            });
+
+            document.getElementById("school_step7").addEventListener("click", function () {
+                filterSchools('병원');
+            });
+
+            document.getElementById("school_step8").addEventListener("click", function () {
+                filterSchools('역');
+            });
+
+            document.getElementById("school_step9").addEventListener("click", function () {
+                filterSchools('버스');
+            });
+
+            document.getElementById("school_step10").addEventListener("click", function () {
+                filterSchools('구청');
+            });
+
+            function searchArea() {
+                var searchInput = document.getElementById('search_area_input').value;
+                var resultsContainer = document.getElementById('results');
+                resultsContainer.innerHTML = '';
+
+                for (var i = 0; i < schools.length; i++) {
+                    var school = schools[i];
+                    if (school.name.includes(searchInput)) {
+                        var resultItem = document.createElement('div');
+                        resultItem.textContent = school.name;
+                        resultItem.className = 'result-item';
+                        resultsContainer.appendChild(resultItem);
+
+                        resultItem.addEventListener('click', function () {
+                            var clickedSchoolName = this.textContent;
+                            var clickedSchool = schools.find(function (item) {
+                                return item.name === clickedSchoolName;
+                            });
+                            if (clickedSchool) {
+                                var markerPosition = new kakao.maps.LatLng(clickedSchool.lat, clickedSchool.lng);
+                                map.panTo(markerPosition);
+                            }
+                        });
+                    }
+                }
+
+                if (resultsContainer.children.length === 0) {
+                    var noResultMessage = document.createElement('div');
+                    noResultMessage.textContent = '검색 결과가 없습니다.';
+                    resultsContainer.appendChild(noResultMessage);
+                }
+            }
+
+            document.getElementById('search_area_input').addEventListener('input', searchArea);
+
+            // Initialize by filtering with '전체'
+            filterSchools('전체');
+        });
+
+        var keydownCtrl = 0;
+        var keydownShift = 0;
+
+
+        document.onkeydown = keycheck;
+        document.onkeyup = uncheckCtrlShift;
+
+
+        function keycheck() {
+            switch (event.keyCode) {
+                case 123: event.keyCode = ''; return false; break; //F12
+                case 17: event.keyCode = ''; keydownCtrl = 1; return false; break; //컨트롤키
+            }
+
+
+            if (keydownCtrl) return false;
+        }
+
+
+        function uncheckCtrlShift() {
+            if (event.keyCode == 17) keydownCtrl = 0;
+            if (event.keyCode == 16) keydownShift = 0;
+        }
+
+
+        function click() {
+            if ((event.button == 2) || (event.button == 2)) { alert('[마우스 오른쪽 클릭] / [컨트롤] / [F12] 금지 입니다.'); }
+        }
+        document.onmousedown = click;
+    </script>
+</body>
+
+</html>

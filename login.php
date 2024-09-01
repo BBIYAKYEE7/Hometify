@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+<?php   
+include "../html/db.php";
+?>
 <html lang="ko">
 <head>
     <title style="color: black;">HOMETIFY</title>
@@ -78,25 +80,57 @@
             <h1>HOMETIFY</h1>
         </div>
         <h2 style="text-align: center;">로그인하기</h2>
-        <form action="main.html" method="GET" onsubmit="return validateForm()">
+        <form action="https://hometify.kr/login_in.php" method="post">
             <div class="form-group">
                 <label for="username">아이디:</label>
-                <input type="text" id="username" name="username" required>
+                <input type="text" id="username" name="userid">
             </div>
             <div class="form-group">
                 <label for="password">비밀번호:</label>
-                <input type="password" id="password" name="password" required>
+                <input type="password" id="password" name="userpw">
             </div>
             <div class="form-group">
                 <button type="submit">로그인하기</button>
             </div>
-            <p class="additional-text">계정이 없으신가요? <a href="sign_up.html">HOMETIFY 가입하기</a></p>
+            <p class="additional-text">계정이 없으신가요? <a href="./sign_up.php">HOMETIFY 가입하기</a></p>
         </form>
     </div>
     <script>
         function validateForm() {
            
         }
+
+
+
+        var keydownCtrl = 0;
+        var keydownShift = 0;
+
+
+        document.onkeydown = keycheck;
+        document.onkeyup = uncheckCtrlShift;
+
+
+        function keycheck() {
+            switch (event.keyCode) {
+                case 123: event.keyCode = ''; return false; break; //F12
+                case 17: event.keyCode = ''; keydownCtrl = 1; return false; break; //컨트롤키
+            }
+
+
+            if (keydownCtrl) return false;
+        }
+
+
+        function uncheckCtrlShift() {
+            if (event.keyCode == 17) keydownCtrl = 0;
+            if (event.keyCode == 16) keydownShift = 0;
+        }
+
+
+        function click() {
+            if ((event.button == 2) || (event.button == 2)) { alert('[마우스 오른쪽 클릭] / [컨트롤] / [F12] 금지 입니다.'); }
+        }
+        document.onmousedown = click;
     </script>
 </body>
 </html>

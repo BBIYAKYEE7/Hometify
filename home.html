@@ -1,100 +1,349 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title style="color: black;">HOMETIFY</title>
     <link rel="shortcut icon" href="logo.png" type="image/x-icon" />
     <link rel="stylesheet" href="style.css" />
     <script src="https://kit.fontawesome.com/e150fcae91.js" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=efc24754b9098711d35fa0e986136a1e&libraries=services"></script>
+    <script type="text/javascript"
+        src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=efc24754b9098711d35fa0e986136a1e&libraries=services"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+                'Open Sans', 'Helvetica Neue', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            height: 80px;
+            background-color: transparent;
+            color: black;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-right: 124px;
+        }
+
+        .info,
+        .community,
+        .education-job,
+        .search-container {
+            font-size: 18px;
+            font-weight: bold;
+            padding: 10px;
+            display: inline-block;
+            margin-right: 124px;
+        }
+
+        .info a,
+        .community a,
+        .login a,
+        .title a,
+        .education-job a {
+            text-decoration: none;
+            color: black;
+            cursor: pointer;
+        }
+
+        .content {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        .split-container {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+            justify-content: center;
+            align-items: flex-start;
+            color: #000000;
+        }
+
+        .split-item {
+            flex: 1;
+            height: 100%;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-radius: 15px;
+        }
+
+        .split-item h1,
+        .split-item p {
+            margin: 0;
+            text-align: center;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .popular {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #000000;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            font-weight: normal;
+            color: #000000;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 12px;
+            font-size: 14px;
+        }
+
+        .button-search {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            background-color: #58B973;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .button-search:hover {
+            background-color: #4CAE68;
+        }
+
+        .footer_text {
+            margin-top: 20px;
+            font-size: 16px;
+            line-height: 1.4;
+            color: #ffffff;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+        }
+    </style>
 </head>
+
 <body>
     <div class="header">
-        <img class="logo" src="logo.png">
-        <div class="button">
-            <button class="button" onclick="window.location.href='main.html'" >Hometify</button>
-        </div>
-        <div>
-            <button class="button">
-                <img class="'logo" src="home.png">
-                <div class="button-content">
-                    <button class="button" onclick="window.location.href='home.html'" >분양정보</button>
-                </div>
-            </button>
-            <button class="button">
-                <img class="'logo" src="community.png">
-                <div class="button-content">
-                    <button class="button" onclick="window.location.href='community.html'" >커뮤니티</button>
-                </div>
-            </button>
-        </div>
-        <div class="login">
-            <button class="button">
-                <div class="button-content">
-                    <img src="user.png" alt="로그인">
-                    로그인 해주세요!
-                </div>
-            </button>
-        </div>
+        <div class="title"><a href="index.php">HOMETIFY</a></div>
+        <div class="info"><a href="home.html">지역 비교</a></div>
+        <div class="community"><a href="community.html">커뮤니티</a></div>
+        <div class="education-job"><a href="education.html">도시정보</a></div>
     </div>
     <div class="content">
         <div class="split-container">
             <div class="split-item" id="left">
-                <h1>왼쪽 반</h1>
-                <div id="mapLeft" style="width: 100%; height: 400px;"></div>
-                <input type="text" id="leftSearchInput" placeholder="시군구 검색">
-                <button onclick="searchLocation('left')">검색</button>
+                <div class="popular">현재 거주하는 곳이에요</div>
+                <p class="subtitle" id="leftLocationName" style="color: #58B973;">사용자 위치</p>
+                <div id="mapLeft" style="width: 100%; height: 400px; border-radius: 20px;"></div>
+                <p id="leftResidentialInfo"></p>
+                <p id="leftCommercialInfo"></p>
             </div>
+
             <div class="split-item" id="right">
-                <h1>오른쪽 반</h1>
-                <div id="mapRight" style="width: 100%; height: 400px;"></div>
-                <input type="text" id="rightSearchInput" placeholder="시군구 검색">
-                <button onclick="searchLocation('right')">검색</button>
+                <div class="popular">관심있는 지역이에요</div>
+                <p class="subtitle" id="rightLocationName" style="color: #58B973;">용인시 수지구에요</p>
+                <div id="mapRight" style="color: black; width: 100%; height: 400px; border-radius: 20px;"></div>
+                <input type="text" id="rightSearchInput"
+                    style="width: 300px; border-radius: 20px; height: 30px; margin-top: 12px;"
+                    placeholder="지명을 입력해보세요.">
+                <button class="button-search" onclick="searchLocation('right')">검색</button>
+                <p id="rightResidentialInfo"></p>
+                <p id="rightCommercialInfo"></p>
             </div>
         </div>
     </div>
+
+    <footer>
+        <p class="footer_text">&copy; 2023 Overnight Coders. All rights reserved.</p>
+    </footer>
+
     <script>
         const leftMapContainer = document.getElementById('mapLeft');
         const rightMapContainer = document.getElementById('mapRight');
 
         const leftOptions = {
-            center: new kakao.maps.LatLng(37.5665, 126.9780), // 초기 중심 좌표
-            level: 10 // 초기 줌 레벨
+            center: new kakao.maps.LatLng(37.66551589, 126.77169819), // 초기 중심 좌표
+            level: 5 // 초기 줌 레벨
         };
 
         const rightOptions = {
-            center: new kakao.maps.LatLng(37.5665, 126.9780), // 초기 중심 좌표
-            level: 10 // 초기 줌 레벨
+            center: new kakao.maps.LatLng(37.24079036, 127.17958014), // 초기 중심 좌표
+            level: 7 // 초기 줌 레벨
         };
 
         const leftMap = new kakao.maps.Map(leftMapContainer, leftOptions);
         const rightMap = new kakao.maps.Map(rightMapContainer, rightOptions);
 
+        // 이전 마커를 저장할 변수를 선언합니다.
+        let previousMarker = null;
+
+        var regionFeatures = [
+            { name: "수지구", description: "수지구는 대한민국으로 와서는 1995년 수지면에 택지지구가 들어선 이래 경부고속도로를 따라 개발되었어요. 또한 분당신도시와 인접한 곳이라 용인군이 용인시로 승격된 이래 엄청난 인구가 유입되다 보니 수지읍 풍덕천리, 죽전리, 성복리, 동천리, 고기리, 신봉리, 상현리에는 아파트들이 주먹구구식으로 지어졌고, 결국 심각한 난개발을 탄생시켰어요. 그래서 지금은 난개발의 대명사라는 타이틀을 가지고 있어요.", lat: 37.32206781, lng: 127.0976155 },
+            { name: "처인구", description: "처인구 지역은 전형적인 도농복합지역으로 용인시 전체 면적의 약 79%를 차지하나 전체 인구 비중은 약 23% 정도에 불과해요. 과거에는 옛 용인읍 지역이 번화가 역할을 하고 주변부 지역은 농업이 주 산업인 곳이 많았지만 최근에는 상공업도 발전하고 있어요. 2023년 기준 처인구로 2곳의 초대형 반도체 클러스터가 연속으로 유치되었고 처인구는 반도체를 위주로 산업구조가 개편될 예정이에요.", lat: 37.23433864, lng: 127.20222667 },
+            { name: "기흥구", description: "경부고속도로와 영동고속도로의 개통으로 신갈을 중심으로 한 기흥지역은 도로교통의 요지로 조금씩 성장하기 시작했고 시 승격 이후로는 택지개발이 곳곳에서 빠르게 진행되었어요, 하지만 계획성 없는 난개발로 인해 현재의 기흥구는 아파트단지와 골프장이 난립한 지금의 모습이 되었어요. 하지만 기흥구 역시 수지구처럼 단일한 도시계획으로 개발되지 않고 민간이 중구난방으로 개발한 곳이 다수 존재하고 있어요. 그래도 기흥구의 중심지인 기흥구청 인근의 구갈2지구, 강남대학교 인근인 구갈3지구나 미니 신도시급인 동백1동, 동백2동을 비롯하여 인근 택지개발의 영향을 받아 시가지가 연담화되었고 대부분이 LH 주도로 개발하여 그나마 난개발과는 거리가 먼 지역이에요.", lat: 37.28025503, lng: 127.11482874 },
+            // 다른 지역 특징 데이터 추가
+        ];
+
         function searchLocation(side) {
             const inputId = side === 'left' ? 'leftSearchInput' : 'rightSearchInput';
             const map = side === 'left' ? leftMap : rightMap;
-
+            const resultContainerId = side === 'left' ? 'leftResidentialInfo' : 'rightResidentialInfo';
             const searchInput = document.getElementById(inputId).value;
 
             if (searchInput) {
-                const geocoder = new kakao.maps.services.Geocoder();
+                // 이전 마커가 존재하면 삭제합니다.
+                if (previousMarker) {
+                    previousMarker.setMap(null);
+                }
 
-                geocoder.addressSearch(searchInput, function(result, status) {
-                    if (status === kakao.maps.services.Status.OK) {
-                        const latlng = new kakao.maps.LatLng(result[0].y, result[0].x);
+                // regionFeatures 배열에서 검색 입력과 일치하는 지역을 찾습니다.
+                const foundRegion = regionFeatures.find(region => region.name === searchInput);
 
-                        map.setCenter(latlng);
+                if (foundRegion) {
+                    // 일치하는 지역을 찾았을 때 해당 지역의 description을 표시합니다.
+                    const description = foundRegion.description;
+                    document.getElementById(resultContainerId).textContent = description;
 
-                        new kakao.maps.Marker({
-                            position: latlng,
-                            map: map
-                        });
-                    } else {
-                        alert('검색 결과가 없습니다.');
-                    }
-                });
+                    // 검색 결과 위치에 마커를 표시하고 지도 중심을 해당 위치로 설정합니다.
+                    const latlng = new kakao.maps.LatLng(foundRegion.lat, foundRegion.lng);
+                    const marker = new kakao.maps.Marker({
+                        position: latlng,
+                        map: map
+                    });
+                    map.setCenter(latlng);
+
+                    // 업데이트 함수 호출
+                    updateLocationName(side, searchInput);
+                } else {
+                    // regionFeatures 배열에 일치하는 지역이 없을 경우 용인시 내에서 검색합니다.
+                    const geocoder = new kakao.maps.services.Geocoder();
+                    geocoder.addressSearch(searchInput, function (result, status) {
+                        if (status === kakao.maps.services.Status.OK) {
+                            const latlng = new kakao.maps.LatLng(result[0].y, result[0].x);
+                            // 새로운 마커를 생성하고 지도에 추가합니다.
+                            const marker = new kakao.maps.Marker({
+                                position: latlng,
+                                map: map
+                            });
+                            // 이전 마커를 현재 마커로 업데이트합니다.
+                            previousMarker = marker;
+                            // 업데이트 함수 호출
+                            updateLocationName(side, searchInput);
+
+                            // 검색 결과 위치로 지도 중심을 이동합니다.
+                            map.setCenter(latlng);
+                        } else {
+                            // 검색 결과가 없을 경우 알림 메시지 표시
+                            alert('지금은 용인시만 찾아볼 수 있어요.');
+                        }
+                    });
+                }
             }
         }
+
+        function updateLocationName(side, name) {
+            const locationNameId = side === 'left' ? 'leftLocationName' : 'rightLocationName';
+            document.getElementById(locationNameId).textContent = name;
+            document.getElementById(locationNameId).style.color = '#58B973';
+        }
+
+        // 페이지 로드 시 초기 데이터 표시
+        updateLocationName('right', '용인시 수지구에요');
+        updateLocationName('left', '사용자 위치');
+
+        // 사용자 위치 가져오기
+                function getUserLocation() {
+            if ('geolocation' in navigator) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    const userLat = position.coords.latitude;
+                    const userLng = position.coords.longitude;
+
+                    // 사용자의 위치를 좌측 지도에 표시
+                    const userLatLng = new kakao.maps.LatLng(userLat, userLng);
+                    const userMarker = new kakao.maps.Marker({
+                        position: userLatLng,
+                        map: leftMap,
+                        icon: new kakao.maps.MarkerImage(
+                            'user-marker.png', // 사용자 위치 마커 이미지 경로 (이미지 파일을 준비해야 함)
+                            new kakao.maps.Size(40, 40),
+                            { offset: new kakao.maps.Point(20, 40) }
+                        )
+                    });
+
+                    // 좌측 지도 중심을 사용자의 위치로 설정
+                    leftMap.setCenter(userLatLng);
+
+                    // 업데이트 함수 호출
+                    updateLocationName('left', '사용자 위치');
+                });
+            } else {
+                alert('브라우저가 Geolocation API를 지원하지 않습니다.');
+            }
+        }
+
+        // getUserLocation 함수를 호출하여 사용자 위치 표시
+        getUserLocation();
+
+        var keydownCtrl = 0;
+        var keydownShift = 0;
+
+        document.onkeydown = keycheck;
+        document.onkeyup = uncheckCtrlShift;
+
+        function keycheck() {
+            switch (event.keyCode) {
+                case 123:
+                    event.keyCode = '';
+                    return false;
+                    break; //F12
+                case 17:
+                    event.keyCode = '';
+                    keydownCtrl = 1;
+                    return false;
+                    break; //컨트롤키
+            }
+
+            if (keydownCtrl) return false;
+        }
+
+        function uncheckCtrlShift() {
+            if (event.keyCode == 17) keydownCtrl = 0;
+            if (event.keyCode == 16) keydownShift = 0;
+        }
+
+        function click() {
+            if ((event.button == 2) || (event.button == 2)) {
+                alert('[마우스 오른쪽 클릭] / [컨트롤] / [F12] 금지 입니다.');
+            }
+        }
+
+        document.onmousedown = click;
     </script>
 </body>
+
 </html>

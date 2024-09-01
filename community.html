@@ -1,23 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+  <title style="color: black;">HOMETIFY</title>
+  <link rel="shortcut icon" href="logo.png" type="image/x-icon" />
+</head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HOMETIFY COMMUNITY</title>
 <style>
-  body, html {
+  body,
+  html {
     margin: 0;
     padding: 0;
     height: 100%;
     font-family: Arial, sans-serif;
   }
-  
+
   .container {
     display: flex;
     flex-direction: column;
     height: 100%;
   }
-  
+
   .header {
     height: 80px;
     background-color: transparent;
@@ -34,7 +39,9 @@
   }
 
   .info,
-  .community{
+  .community,
+  .education-job,
+  .search-container {
     font-size: 18px;
     font-weight: bold;
     padding: 10px;
@@ -42,8 +49,11 @@
     margin-right: 124px;
   }
 
+  .community a,
   .info a,
-  .community a, .title a {
+  .login a,
+  .title a,
+  .education-job a {
     text-decoration: none;
     color: black;
     cursor: pointer;
@@ -55,12 +65,12 @@
     white-space: nowrap;
     margin-left: auto;
   }
-  
+
   main {
     flex: 1;
     padding: 2rem;
   }
-  
+
   .tweet {
     border: 1px solid #ccc;
     padding: 1rem;
@@ -68,7 +78,7 @@
     background-color: white;
     border-radius: 5px;
   }
-  
+
   footer {
     background-color: #333;
     color: white;
@@ -80,7 +90,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #1DA1F2;
+    background-color: #58B973;
     color: white;
     border: none;
     border-radius: 5px;
@@ -95,7 +105,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #1DA1F2;
+    background-color: #58B973;
     color: white;
     border: none;
     border-radius: 50%;
@@ -123,38 +133,36 @@
   }
 </style>
 </head>
+
 <body>
-  <div class="container">
-    <div class="header">
-      <div class="title"><a href="main.html">HOMETIFY</a></div>
-      <div>
-        <div class="info"><a href="home.html">분양 정보</a></div>
-        <div class="community"><a href="community.html">커뮤니티</a></div>
+  <div class="header">
+    <div class="title"><a href="index.php">HOMETIFY</a></div>
+    <div class="info"><a href="home.html">지역 비교</a></div>
+    <div class="community"><a href="community.html">커뮤니티</a></div>
+    <div class="education-job"><a href="education.html">도시정보</a></div>
+  </div>
+  <main>
+    <div class="tweet">
+      <h3>사용자 이름</h3>
+      <div class="tweet-content">
+        <p id="tweetContent1" contenteditable="true" placeholder="글을 입력하세요..."></p>
+        <button class="post-button" id="postButton1" onclick="postTweet('tweetContent1', 'fileInput1')">올리기</button>
+        <input type="file" id="fileInput1" class="file-input">
       </div>
-      <div class="login">로그인 해주세요!</div>
     </div>
-    <main>
-      <div class="tweet">
-        <h3>사용자 이름</h3>
-        <div class="tweet-content">
-          <p id="tweetContent1" contenteditable="true" placeholder="글을 입력하세요..."></p>
-          <button class="post-button" id="postButton1" onclick="postTweet('tweetContent1', 'fileInput1')">올리기</button>
-          <input type="file" id="fileInput1" class="file-input">
-        </div>
+    <div class="tweet">
+      <h3>사용자 이름</h3>
+      <div class="tweet-content">
+        <p id="tweetContent2" contenteditable="true" placeholder="글을 입력하세요..."></p>
+        <button class="post-button" id="postButton2" onclick="postTweet('tweetContent2', 'fileInput2')">올리기</button>
+        <input type="file" id="fileInput2" class="file-input">
       </div>
-      <div class="tweet">
-        <h3>사용자 이름</h3>
-        <div class="tweet-content">
-          <p id="tweetContent2" contenteditable="true" placeholder="글을 입력하세요..."></p>
-          <button class="post-button" id="postButton2" onclick="postTweet('tweetContent2', 'fileInput2')">올리기</button>
-          <input type="file" id="fileInput2" class="file-input">
-        </div>
-      </div>
-      <button class="add-button" onclick="addTweetBox()">+</button>
-    </main>
-    <footer>
-      <p>&copy; 2023 HOMETIFY COMMUNITY. All rights reserved.</p>
-    </footer>
+    </div>
+    <button class="add-button" onclick="addTweetBox()">+</button>
+  </main>
+  <footer>
+    <p>&copy; 2023 Overnight Coders. All rights reserved.</p>
+  </footer>
   </div>
 
   <script>
@@ -204,6 +212,37 @@
       `;
       main.insertBefore(newTweetDiv, document.querySelector(".add-button"));
     }
+
+    var keydownCtrl = 0;
+    var keydownShift = 0;
+
+
+    document.onkeydown = keycheck;
+    document.onkeyup = uncheckCtrlShift;
+
+
+    function keycheck() {
+      switch (event.keyCode) {
+        case 123: event.keyCode = ''; return false; break; //F12
+        case 17: event.keyCode = ''; keydownCtrl = 1; return false; break; //컨트롤키
+      }
+
+
+      if (keydownCtrl) return false;
+    }
+
+
+    function uncheckCtrlShift() {
+      if (event.keyCode == 17) keydownCtrl = 0;
+      if (event.keyCode == 16) keydownShift = 0;
+    }
+
+
+    function click() {
+      if ((event.button == 2) || (event.button == 2)) { alert('[마우스 오른쪽 클릭] / [컨트롤] / [F12] 금지 입니다.'); }
+    }
+    document.onmousedown = click;
   </script>
 </body>
+
 </html>
